@@ -6,6 +6,7 @@ import { Country } from '../entities/Country';
 import { DataPacket } from '../entities/DataPacket';
 import { Vehicle } from '../entities/Vehicle';
 import { GeocodeService } from './GeocodeService';
+import { TelegramService } from './TelegramService';
 
 const addressGeneralKeys = [
   'county',
@@ -43,17 +44,17 @@ export class VehicleSocketService {
 
   public vehicles: Map<string, { vehicle: Vehicle, socket: SocketIO.Socket, session: SocketSession }> = new Map();
 
-  constructor(@IO private io: SocketIO.Server, private geocodeService: GeocodeService) { }
+  constructor(@IO private io: SocketIO.Server, private geocodeService: GeocodeService, private telegramService: TelegramService) { }
 
   $onConnection(@Socket socket: SocketIO.Socket, @SocketSession session: SocketSession) {
     console.log('=====   CONNECTED A CLIENT   =====');
     console.log(`===== SOCKET ID ${socket.id} =====`);
 
-    const key = socket.handshake.query?.key || socket.id;
-    socket.send(key);
+    const key: string = (socket.handshake.query?.key || '') as string;
+    console.log('KEY', key);
     Vehicle.findOneOrFail(undefined, { where: { key } })
       .then((vehicle: Vehicle) => {
-        this.vehicles.set(socket.id, { vehicle, socket, session });
+        this.vehicles.set(key, { vehicle, socket, session });
       })
       .catch(() => socket.disconnect());
   }
@@ -86,6 +87,10 @@ export class VehicleSocketService {
         data.vehicle = v?.vehicle;
         data.country = country;
         data.save();
+
+        this.telegramService.updateLocation(v?.vehicle, data.speed, data.latitude, data.longitude);
+        this.telegramService.updateBattery(v?.vehicle, data.battery);
+        this.telegramService.updateTemperature(v?.vehicle, data.temperature);
       });
   }
 }

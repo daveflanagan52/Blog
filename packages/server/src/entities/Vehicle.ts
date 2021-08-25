@@ -20,6 +20,12 @@ export class Vehicle extends BaseEntity {
   @Required()
   key: string;
 
+  @Column({ nullable: true })
+  telegramBotToken?: string;
+
+  @Column({ nullable: true })
+  telegramBotChatId?: string;
+
   @OneToMany(() => DataPacket, (dataPacket) => dataPacket.country)
   dataPackets?: DataPacket[];
 }
