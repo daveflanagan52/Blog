@@ -5,6 +5,7 @@ import { Author } from './Author';
 import { Category } from './Category';
 import { Comment } from './Comment';
 import { Country } from './Country';
+import { PostComponent } from './PostComponent';
 
 @Entity({
   orderBy: {
@@ -45,4 +46,7 @@ export class Post extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments?: Comment[];
+
+  @OneToMany(() => PostComponent, (component) => component.post)
+  components?: PostComponent[];
 }

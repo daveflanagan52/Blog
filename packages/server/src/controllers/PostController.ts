@@ -15,13 +15,12 @@ export class PostController extends BaseController {
   @Returns(200, Array).Of(Post)
   find(@QueryParams('limit') limit: number, @QueryParams('order') order: string, @QueryParams('direction') direction: string, @QueryParams('exclude') exclude?: string): Promise<Post[]> {
     if (order === 'rand') {
-      const query = this.connection.createQueryBuilder()
-        .select('*')
-        .from(Post, 'post')
+      const query = this.connection.createQueryBuilder('post', 'p')
+        .innerJoinAndSelect('p.components', 'c')
         .orderBy('RANDOM()')
         .limit(limit);
       if (exclude) { query.where(`published = true and post.id != ${exclude}`); }
-      return query.execute();
+      return query.getMany().then(result => result as Post[]);
     }
     const o: any = {};
     o[order] = direction;
@@ -31,6 +30,7 @@ export class PostController extends BaseController {
       },
       order: o,
       take: limit,
+      relations: ['components']
     });
   }
 
@@ -38,7 +38,7 @@ export class PostController extends BaseController {
   @ContentType('application/json')
   @Returns(200, Post)
   findBySlug(@PathParams('slug') slug: string): Promise<Post | undefined> {
-    return Post.findOne(undefined, { where: { published: true, slug }, relations: ['categories', 'author', 'country', 'comments'] })
+    return Post.findOne(undefined, { where: { published: true, slug }, relations: ['categories', 'author', 'country', 'comments', 'components'] })
       .then((post: Post) => {
         const comments = post.comments?.filter((comment: Comment) => comment.approved).map((comment: Comment) => ({
           name: comment.name,

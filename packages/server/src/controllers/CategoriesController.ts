@@ -17,7 +17,7 @@ export class CategoriesController extends BaseController {
   @ContentType('application/json')
   @Returns(200, Category)
   findBySlug(@PathParams('slug') slug: string): Promise<Category | undefined> {
-    return Category.findOne(undefined, { where: { slug }, relations: ['posts'] })
+    return Category.findOne(undefined, { where: { slug }, relations: ['posts', 'posts.components'] })
       .then((category: Category) => ({
         ...category,
         posts: category.posts?.filter((post: Post) => post.published).sort((a, b) => (a.createdAt < b.createdAt ? 1 : a.createdAt === b.createdAt ? 0 : -1)),

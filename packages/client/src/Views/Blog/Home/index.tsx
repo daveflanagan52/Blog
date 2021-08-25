@@ -1,5 +1,4 @@
 import React from 'react';
-import { io } from 'socket.io-client';
 
 import Header from '../../../Components/Header';
 import Container from '../../../Components/Container';
@@ -9,28 +8,10 @@ import LatestPosts from '../../../Components/LatestPosts';
 
 import Categories from './Categories';
 import Build from './Build';
-import Instagram from './Instagram';
 
 import img from '../../../Resources/us.png';
 
 const Home = () => {
-  const socket = io('http://localhost:8083', { path: '/socket.io/vehicle', query: { key: 'eba1b95b-0ef6-44e0-b66d-0826da908a03' } });
-
-  socket.on('connect', () => {
-    console.log(socket);
-    console.log('connected to server');
-    socket.send('dataPing');
-  });
-
-  // handle the event sent with socket.send()
-  socket.on('disconnect', (data) => {
-    console.log('disconnected');
-  });
-
-  socket.onAny((event, ...args) => {
-    console.log(`got ${event}`, args);
-  });
-
   return (
     <div>
       <Header />

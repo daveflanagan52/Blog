@@ -685,12 +685,23 @@ header {
     }
 }
 
-@include media-breakpoint-up(md) {
-    img.float-md-end, img.float-md-start {
-        width: attr(data-width);
-    }
+img.float-md-end, img.float-md-start, img.float-md-none {
+    margin-bottom: 1rem;
 }
 
+@include media-breakpoint-down(md) {
+    img.float-md-end, img.float-md-start {
+        width: auto !important;
+    }
+}
+@include media-breakpoint-up(md) {
+    img.float-md-end {
+        margin-left: 1rem;
+    }
+    img.float-md-start {
+        margin-right: 1rem;
+    }
+}
 @include media-breakpoint-up(lg) {
     header {
         margin-bottom: 4rem;

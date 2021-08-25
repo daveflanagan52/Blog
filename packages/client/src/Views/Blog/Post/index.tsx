@@ -1,5 +1,4 @@
 import React from 'react';
-import parser, { Tag } from 'bbcode-to-react';
 import { Link, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,54 +19,6 @@ import RandomPosts from '../../../Components/RandomPosts';
 type PostParams = {
   post: string;
 };
-
-class PTag<T = { linkify: boolean }> extends Tag<T> {
-  toReact() {
-    return (
-      <p>{this.getComponents()}</p>
-    );
-  }
-}
-
-class DCTag<T = { linkify: boolean }> extends Tag<T> {
-  toReact() {
-    return (
-      <span className="dropcap">{this.getComponents()}</span>
-    );
-  }
-}
-
-class ImageTag<T = { linkify: boolean }> extends Tag<T> {
-  toReact() {
-    const params: { align?: string, width?: string } = this.params;
-    const attributes = {
-      src: this.getContent(true),
-      className: `img-fluid float-md-${params?.align || 'none'}`,
-      'data-width': params?.width || 'auto',
-    };
-    return (
-      <img
-        {...attributes}
-      />
-    );
-  }
-}
-
-class VideoTag<T = { linkify: boolean }> extends Tag<T> {
-  toReact() {
-    const attributes = {
-      src: this.getContent(true),
-    };
-    return (
-      <div className="ratio ratio-16x9 mb-4"><iframe src={`https://www.youtube.com/embed/${attributes.src}?rel=0`} title="YouTube video" allowFullScreen /></div>
-    );
-  }
-}
-
-parser.registerTag('p', PTag);
-parser.registerTag('dc', DCTag);
-parser.registerTag('img', ImageTag);
-parser.registerTag('video', VideoTag);
 
 const Post = () => {
   const { post } = useParams<PostParams>();
@@ -102,7 +53,16 @@ const Post = () => {
             </div>
             <img alt={data?.name} src={data?.thumbnail} className="card-img-top mb-4" />
             <div className="card-body">
-              {parser.toReact(data?.content || '')}
+              {(data?.components || []).slice().sort((a, b) => a.order - b.order).map((component) => {
+                switch (component.type) {
+                  case 'text':
+                    return (<p>{component.content}</p>);
+                  case 'image':
+                    return (<img src={component.content} width={component?.width || 'auto'} className={'img-fluid float-md-' + (component.align || 'none')} />);
+                  case 'video':
+                    return (<div className="ratio ratio-16x9 mb-4"><iframe src={`https://www.youtube.com/embed/${component.content}?rel=0`} title="YouTube video" allowFullScreen /></div>);
+                }
+              })}
             </div>
           </div>
         </section>
@@ -117,7 +77,6 @@ const Post = () => {
 
           <h2 className="title mb-4">Leave a Comment</h2>
           <form method="post">
-            <input type="hidden" name="_token" value="jHh7i79DDEFk5SUlNrDunInAFlY7kbE50Q9HAkqd" />
             <p>Your email address will not be published. All fields are required.</p>
             <div className="mb-3">
               <label htmlFor="comment" className="form-label">Comment</label>

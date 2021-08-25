@@ -8,8 +8,17 @@ type Post = {
   content?: string,
   createdAt: Date,
   country: Country,
-  categories?: Category[]
-  comments?: Comment[]
+  categories?: Category[],
+  comments?: Comment[],
+  components?: PostCompoment[],
+};
+
+type PostCompoment = {
+  type: string,
+  content: string,
+  width?: number,
+  align?: string,
+  order: number,
 };
 
 type Comment = {
@@ -47,5 +56,5 @@ type Author = {
 };
 
 export type {
-  Post, Comment, Category, Country, Location, Author,
+  Post, Comment, Category, Country, Location, Author, PostCompoment
 };
