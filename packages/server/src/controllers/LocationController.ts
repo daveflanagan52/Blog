@@ -4,7 +4,7 @@ import {
 import { Returns, ContentType } from '@tsed/schema';
 
 import { BaseController } from './BaseController';
-import { DataPacket } from '../entities/DataPacket';
+import { Vehicle } from '../entities/Vehicle';
 
 class Location {
   country: string;
@@ -23,11 +23,9 @@ export class LocationController extends BaseController {
   @ContentType('application/json')
   @Returns(200, Location)
   find(): Promise<Location> {
-    return DataPacket.findOne(undefined, {
+    return Vehicle.findOne(undefined, {
+      where: { showOnBlog: true },
       relations: ['country'],
-      order: {
-        createdAt: 'DESC',
-      },
-    }).then((dataPacket: DataPacket) => new Location(dataPacket?.country?.code || 'fi', dataPacket?.location_general || 'Unknown'));
+    }).then((vehicle: Vehicle) => new Location(vehicle?.country?.code || 'fi', vehicle?.locationGeneral || 'Unknown'));
   }
 }

@@ -3,7 +3,7 @@ import {
   Column, Entity, OneToMany, PrimaryGeneratedColumn, BaseEntity,
 } from 'typeorm';
 import { Post } from './Post';
-import { DataPacket } from './DataPacket';
+import { Vehicle } from './Vehicle';
 
 @Entity()
 export class Country extends BaseEntity {
@@ -24,6 +24,6 @@ export class Country extends BaseEntity {
   @OneToMany(() => Post, (post) => post.country)
   posts?: Post[];
 
-  @OneToMany(() => DataPacket, (dataPacket) => dataPacket.country)
-  dataPackets?: DataPacket[];
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.country)
+  vehicles?: Vehicle[];
 }

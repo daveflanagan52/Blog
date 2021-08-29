@@ -1,8 +1,8 @@
 import { MaxLength, Property, Required } from '@tsed/schema';
 import {
-  Column, Entity, OneToMany, PrimaryGeneratedColumn, BaseEntity,
+  Column, Entity, PrimaryGeneratedColumn, BaseEntity, ManyToOne,
 } from 'typeorm';
-import { DataPacket } from './DataPacket';
+import { Country } from './Country';
 
 @Entity()
 export class Vehicle extends BaseEntity {
@@ -26,6 +26,15 @@ export class Vehicle extends BaseEntity {
   @Column({ nullable: true })
   telegramBotChatId?: string;
 
-  @OneToMany(() => DataPacket, (dataPacket) => dataPacket.country)
-  dataPackets?: DataPacket[];
+  @Column({ nullable: true })
+  locationGeneral: string;
+
+  @Column({ nullable: true })
+  locationSpecific: string;
+
+  @Column({ nullable: true })
+  showOnBlog: boolean;
+
+  @ManyToOne(() => Country, (country) => country.vehicles)
+  country?: Country;
 }

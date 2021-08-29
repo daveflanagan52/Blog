@@ -3,7 +3,6 @@ import {
 } from '@tsed/socketio';
 import * as SocketIO from 'socket.io';
 import { Country } from '../entities/Country';
-import { DataPacket } from '../entities/DataPacket';
 import { Vehicle } from '../entities/Vehicle';
 import { GeocodeService } from './GeocodeService';
 import { TelegramService } from './TelegramService';
@@ -74,19 +73,17 @@ export class VehicleSocketService {
   }
 
   @Input('dataPing')
-  dataPing(@Args(0) data: DataPacket, @Socket socket: Socket, @Namespace nsp: Namespace) {
+  dataPing(@Args(0) data: { [key: string]: number }, @Socket socket: Socket, @Namespace nsp: Namespace) {
     const v = this.vehicles.get(socket.id);
     if (!v || v.socket.disconnected) {
       return Promise.resolve({ error: `connection to ${v?.vehicle.key} not established` });
     }
     this.geocodeService.search(data.latitude, data.longitude)
       .then(async (response) => {
-        const country = await Country.findOne(undefined, { where: { code: response?.address?.country_code.toUpperCase() || '' } });
-        data.location_general = Object.keys(response?.address || {}).filter((key) => addressGeneralKeys.includes(key)).map((key) => response?.address[key]).join(' ');
-        data.location_specific = Object.keys(response?.address || {}).filter((key) => addressSpecificKeys.includes(key)).map((key) => response?.address[key]).join(' ');
-        data.vehicle = v?.vehicle;
-        data.country = country;
-        data.save();
+        v.vehicle.country = await Country.findOne(undefined, { where: { code: response?.address?.country_code.toUpperCase() || '' } });
+        v.vehicle.locationGeneral = Object.keys(response?.address || {}).filter((key) => addressGeneralKeys.includes(key)).map((key) => response?.address[key]).join(' ');
+        v.vehicle.locationSpecific = Object.keys(response?.address || {}).filter((key) => addressSpecificKeys.includes(key)).map((key) => response?.address[key]).join(' ');
+        v.vehicle.save();
 
         this.telegramService.updateLocation(v?.vehicle, data.speed, data.latitude, data.longitude);
         this.telegramService.updateBattery(v?.vehicle, data.battery);
