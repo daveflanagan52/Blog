@@ -2,13 +2,7 @@ import React, { useEffect } from "react";
 import ReactGA, { FieldsObject } from "react-ga";
 import { RouteComponentProps } from "react-router-dom";
 
-declare var process: {
-  env: {
-    GA_PROPERTY: string
-  }
-}
-
-ReactGA.initialize(process.env.GA_PROPERTY);
+ReactGA.initialize('UA-117372616-3');
 
 export default <P extends RouteComponentProps>(
   WrappedComponent: React.ComponentType<P>,

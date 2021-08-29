@@ -349,6 +349,7 @@ body {
         .icon {
             margin-right: 2rem;
             font-size: 4rem;
+            display: none;
         }
         .subtitle {
             margin-bottom: 0;
@@ -683,8 +684,7 @@ img.float-md-none {
     img.float-md-start {
         margin-right: 1rem;
     }
-}
-@include media-breakpoint-up(lg) {
+    
     header {
         margin-bottom: 4rem;
     }
@@ -837,5 +837,8 @@ img.float-md-none {
             align-self: center;
             margin-left: 1rem;
         }
+    }
+    .location .content .icon {
+        display: block;
     }
 }
