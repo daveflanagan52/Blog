@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Container from '../Container';
 
-const Header = () => (
+const Header: React.FC = () => (
   <header>
     <Container>
       <Link to="/" className="dropcap">D&amp;S</Link>

@@ -1,48 +1,50 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import CookieConsent from "react-cookie-consent";
 
 import store from './Store';
 
 import './App.scss';
 
-import Home from './Views/Blog/Home';
-import NoMatch from './Views/Blog/NoMatch';
-import About from './Views/Blog/About';
-import Post from './Views/Blog/Post';
-import Category from './Views/Blog/Category';
-import Country from './Views/Blog/Country';
 import ScrollToTop from './Components/ScrollToTop';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import GoogleAnalytics from './Components/GoogleAnalytics';
+
+import Home from './Views/Home';
+import NoMatch from './Views/NoMatch';
+import About from './Views/About';
+import Post from './Views/Post';
+import Category from './Views/Category';
+import Country from './Views/Country';
+import Privacy from './Views/Privacy';
 
 const App: React.FC = () => (
   <Provider store={store}>
     <Router>
+      <CookieConsent
+        disableStyles={true}
+        buttonClasses="ms-auto btn btn-primary"
+        containerClasses="cookie d-flex align-items-center p-2 bg-dark text-light"
+        contentClasses=""
+        buttonText="OK"
+        buttonWrapperClasses="ms-auto"
+      >
+        Cookies are used to improve your expierience on this site. To find out more, read the <Link to='/privacy'>Privacy Policy</Link>.
+      </CookieConsent>
       <ScrollToTop />
+      <Header />
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-
-        <Route path="/about">
-          <About />
-        </Route>
-
-        <Route path="/post/:post">
-          <Post />
-        </Route>
-
-        <Route path="/category/:category">
-          <Category />
-        </Route>
-
-        <Route path="/country/:country">
-          <Country />
-        </Route>
-
-        <Route path="*">
-          <NoMatch />
-        </Route>
+        <Route exact path="/" component={GoogleAnalytics(Home)} />
+        <Route path="/about"  component={GoogleAnalytics(About)} />
+        <Route path="/privacy"  component={GoogleAnalytics(Privacy)} />
+        <Route path="/post/:post"  component={GoogleAnalytics(Post)} />
+        <Route path="/category/:category"  component={GoogleAnalytics(Category)} />
+        <Route path="/country/:country"  component={GoogleAnalytics(Country)} />
+        <Route path="*"  component={GoogleAnalytics(NoMatch)} />
       </Switch>
+      <Footer />
     </Router>
   </Provider>
 );

@@ -1,20 +1,22 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
-import Header from '../../../Components/Header';
-import Container from '../../../Components/Container';
-import Button, { ButtonType } from '../../../Components/Button';
-import Location from '../../../Components/Location';
-import LatestPosts from '../../../Components/LatestPosts';
+import Container from '../../Components/Container';
+import Button, { ButtonType } from '../../Components/Button';
+import Location from '../../Components/Location';
+import LatestPosts from '../../Components/LatestPosts';
 
 import Categories from './Categories';
 import Build from './Build';
 
-import img from '../../../Resources/us.png';
+import img from '../../Resources/us.png';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
-    <div>
-      <Header />
+    <>
+      <Helmet>
+        <title>Dave &amp; Suvi | Home</title>
+      </Helmet>
 
       <Container>
 
@@ -36,7 +38,7 @@ const Home = () => {
         <Build />
         <Location />
       </Container>
-    </div>
+    </>
   );
 };
 

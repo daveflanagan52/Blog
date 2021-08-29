@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 
-type ContainerProps = {
-  children: ReactNode | Array<ReactNode>,
+interface ContainerProps {
+  fluid?: boolean,
+  children: ReactNode | ReactNode[],
 }
 
-const Container = ({ children }: ContainerProps) => (
-  <div className="container">
-    {children}
+const Container: React.FC<ContainerProps> = (props: ContainerProps) => (
+  <div className={props.fluid ? 'container-fluid' : 'container'}>
+    {props.children}
   </div>
 );
 

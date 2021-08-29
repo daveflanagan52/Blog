@@ -1,15 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
-import Header from '../../../Components/Header';
-import Container from '../../../Components/Container';
-import Location from '../../../Components/Location';
-import Footer from '../../../Components/Footer';
-import RandomPosts from '../../../Components/RandomPosts';
+import Container from '../../Components/Container';
+import Location from '../../Components/Location';
+import RandomPosts from '../../Components/RandomPosts';
 
-const About = () => (
+const About: React.FC = () => (
   <>
-    <Header />
-
+    <Helmet>
+      <title>Dave &amp; Suvi | About Us</title>
+    </Helmet>
     <Container>
       <section className="about">
         <h1 className="title">Dave</h1>
@@ -26,8 +26,6 @@ const About = () => (
       <RandomPosts />
       <Location />
     </Container>
-
-    <Footer />
   </>
 );
 

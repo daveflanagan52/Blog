@@ -1,12 +1,14 @@
 import React from 'react';
 import { OrderDirection, OrderTypes, useGetPostsQuery } from '../../Services/Post';
+import Column from '../Column';
 import PostPreview from '../PostPreview';
+import Row from '../Row';
 
 type RandomPostsProps = {
   exclude?: number,
 }
 
-const RandomPosts = ({ exclude }: RandomPostsProps) => {
+const RandomPosts: React.FC<RandomPostsProps> = ({ exclude }) => {
   const { data, isLoading } = useGetPostsQuery({
     order: OrderTypes.Random,
     direction: OrderDirection.Descending,
@@ -23,9 +25,9 @@ const RandomPosts = ({ exclude }: RandomPostsProps) => {
           <p className="text-center mb-5">It seems there's no posts here, check back soon!</p>
         </>
       )}
-      <div className="row">
-        {(data || []).map((post) => <div key={post.id} className="col col-md-4"><PostPreview {...post} /></div>)}
-      </div>
+      <Row>
+        {(data || []).map((post) => <Column key={post.id} md={4}><PostPreview {...post} /></Column>)}
+      </Row>
     </section>
   );
 };

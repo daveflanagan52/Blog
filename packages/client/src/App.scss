@@ -1,49 +1,53 @@
-@import "Variables";
+$body-bg: #f1f5f9;
+$body-color: #1d212f;
+$primary: #e9c46a;
+$secondary: #e76f51;
+$dark: #1a202e;
+$font-family-base: "Roboto", sans-serif !important;
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+);
 @import "~bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Nothing+You+Could+Do&family=Roboto:wght@400;500;700&display=swap");
+
+.cookie {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+}
 
 body {
     overflow-x: hidden;
     overflow-y: scroll;
 }
 
-.form-control, .form-control:focus {
+.form-control,
+.form-control:focus {
     background-color: white;
 }
 
 .loader {
-    animation: fadeIn 500ms;
+    background: rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    right: 0;
+    z-index: 1100;
 
-    svg {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-
-        circle {
-            fill: $primary;
-        }
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
     }
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-.container {
-    max-width: 1020px;
+.btn-primary,
+.btn-secondary {
+    color: #fff;
 }
 
 .title {
@@ -413,21 +417,14 @@ body {
     }
 }
 
-.btn {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-    &.btn-secondary {
-        color: #fff;
-    }
-}
-
 .card {
     position: relative;
     background: none;
     border-radius: 0;
     border: 0;
 
-    .img-fluid, .card-img-top {
+    .img-fluid,
+    .card-img-top {
         border-radius: 4px;
     }
 
@@ -468,7 +465,7 @@ body {
                 }
                 &:last-child {
                     margin-right: 0;
-                    
+
                     &:after {
                         display: none;
                     }
@@ -644,53 +641,38 @@ header {
 }
 
 .alert {
-    border-radius: 0;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-left: 0.25rem solid #000;
     padding: 0.5rem 1rem;
+    color: $dark;
 
     &.alert-info {
-        border-left: 5px solid $info;
-        background: tint-color($info, 90%);
-
-        a {
-            color: $info;
-            font-weight: bold;
-        }
+        border-left-color: $info;
     }
-    &.alert-warning {
-        border-left: 5px solid $warning;
-        background: tint-color($warning, 90%);
 
-        a {
-            color: $warning;
-            font-weight: bold;
-        }
-    }
     &.alert-success {
-        border-left: 5px solid $success;
-        background: tint-color($success, 90%);
-
-        a {
-            color: $success;
-            font-weight: bold;
-        }
+        border-left-color: $success;
     }
-    &.alert-danger {
-        border-left: 5px solid $danger;
-        background: tint-color($danger, 90%);
 
-        a {
-            color: $danger;
-            font-weight: bold;
-        }
+    &.alert-warning {
+        border-left-color: $warning;
+    }
+
+    &.alert-danger {
+        border-left-color: $danger;
     }
 }
 
-img.float-md-end, img.float-md-start, img.float-md-none {
+img.float-md-end,
+img.float-md-start,
+img.float-md-none {
     margin-bottom: 1rem;
 }
 
 @include media-breakpoint-down(md) {
-    img.float-md-end, img.float-md-start {
+    img.float-md-end,
+    img.float-md-start {
         width: auto !important;
     }
 }

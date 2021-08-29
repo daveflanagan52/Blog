@@ -2,7 +2,7 @@ import React from 'react';
 import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Instagram = () => (
+const Instagram: React.FC = () => (
   <section className="instagram">
     <div className="instagram-profile">
       <div className="instagram-insert">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,28 +7,28 @@ import {
   faClock, faGlobe, faTags, faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useGetPostQuery } from '../../../Services/Post';
+import { useGetPostQuery } from '../../Services/Post';
 
-import Header from '../../../Components/Header';
-import Container from '../../../Components/Container';
-import Footer from '../../../Components/Footer';
-import Loader from '../../../Components/Loader';
-import Comment from '../../../Components/Comment';
-import { Comment as CommentType } from '../../../Types';
-import RandomPosts from '../../../Components/RandomPosts';
+import Container from '../../Components/Container';
+import Loader from '../../Components/Loader';
+import Comment from '../../Components/Comment';
+import { Comment as CommentType } from '../../Types';
+import RandomPosts from '../../Components/RandomPosts';
 
 type PostParams = {
   post: string;
 };
 
-const Post = () => {
+const Post: React.FC = () => {
   const { post } = useParams<PostParams>();
   const { data, isLoading } = useGetPostQuery(post);
 
   return (
     <>
+      <Helmet>
+        <title>Dave &amp; Suvi | {data?.name || 'Post'}</title>
+      </Helmet>
       <Loader show={isLoading} />
-      <Header />
 
       <Container>
         <section className="posts">
@@ -100,8 +101,6 @@ const Post = () => {
 
         <RandomPosts exclude={data?.id || -1} />
       </Container>
-
-      <Footer />
     </>
   );
 };

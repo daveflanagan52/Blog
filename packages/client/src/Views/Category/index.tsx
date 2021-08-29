@@ -1,26 +1,29 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-import { useGetCategoryQuery } from '../../../Services/Post';
+import { useGetCategoryQuery } from '../../Services/Post';
 
-import Header from '../../../Components/Header';
-import Container from '../../../Components/Container';
-import Footer from '../../../Components/Footer';
-import Loader from '../../../Components/Loader';
-import PostPreview from '../../../Components/PostPreview';
+import Container from '../../Components/Container';
+import Loader from '../../Components/Loader';
+import PostPreview from '../../Components/PostPreview';
+import Row from '../../Components/Row';
+import Column from '../../Components/Column';
 
 type CategoryParams = {
   category: string;
 };
 
-const Category = () => {
+const Category: React.FC = () => {
   const { category } = useParams<CategoryParams>();
   const { data, isLoading } = useGetCategoryQuery(category);
 
   return (
     <>
+      <Helmet>
+        <title>Dave &amp; Suvi | {data?.name || 'Category'}</title>
+      </Helmet>
       <Loader show={isLoading} />
-      <Header />
 
       <Container>
         <section className="posts">
@@ -32,13 +35,11 @@ const Category = () => {
               <p className="text-center mb-5">It seems there's no posts here, check back soon!</p>
             </>
           )}
-          <div className="row">
-            {(data?.posts || []).map((post) => <div key={post.id} className="col col-md-4"><PostPreview {...post} /></div>)}
-          </div>
+          <Row>
+            {(data?.posts || []).map((post) => <Column key={post.id} md={4}><PostPreview {...post} /></Column>)}
+          </Row>
         </section>
       </Container>
-
-      <Footer />
     </>
   );
 };

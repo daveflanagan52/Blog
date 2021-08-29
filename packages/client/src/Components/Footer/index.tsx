@@ -4,16 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 import Container from '../Container';
+import moment from 'moment';
 
-const Footer = () => (
+const Footer: React.FC = () => (
   <footer>
     <Container>
       <div className="footer">
         <div>
           <a href="#top">Back to Top</a>
           <span className="mx-2">|</span>
-          {' '}
           <Link to="/">Back to Home</Link>
+          <span className="mx-2">|</span>
+          <Link to="/privacy">Privacy Policy</Link>
         </div>
         <ul className="social">
           <li>
@@ -33,7 +35,7 @@ const Footer = () => (
           </li>
         </ul>
         <div className="copyright">
-          &copy; 2021 Dave &amp; Suvi
+          &copy; {moment().format('YYYY')} Dave &amp; Suvi
         </div>
       </div>
     </Container>

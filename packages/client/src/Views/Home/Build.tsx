@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Button, { ButtonType } from '../../../Components/Button';
+import Button, { ButtonType } from '../../Components/Button';
 
-import img from '../../../Resources/van.png';
+import img from '../../Resources/van.png';
 
-const Build = () => (
+const Build: React.FC = () => (
   <section className="build">
     <div className="content">
       <div className="title">Build Log</div>

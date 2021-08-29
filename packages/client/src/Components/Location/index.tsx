@@ -7,7 +7,7 @@ import Button, { ButtonType } from '../Button';
 
 import img from '../../Resources/location.jpg';
 
-const Location = () => {
+const Location: React.FC = () => {
   const { data } = useGetLocationQuery(undefined);
 
   return (

@@ -7,6 +7,7 @@ import md5 from 'md5';
 import { BaseController } from './BaseController';
 import { Post } from '../entities/Post';
 import { Comment } from '../entities/Comment';
+import { PostComponent } from '../entities/PostComponent';
 
 @Controller('/posts')
 export class PostController extends BaseController {
@@ -15,12 +16,22 @@ export class PostController extends BaseController {
   @Returns(200, Array).Of(Post)
   find(@QueryParams('limit') limit: number, @QueryParams('order') order: string, @QueryParams('direction') direction: string, @QueryParams('exclude') exclude?: string): Promise<Post[]> {
     if (order === 'rand') {
-      const query = this.connection.createQueryBuilder('post', 'p')
-        .innerJoinAndSelect('p.components', 'c')
+      return this.connection
+        .createQueryBuilder('post', 'p')
+        .limit(limit)
+        .where(`p.published = true and p.id != ${exclude || -1}`)
         .orderBy('RANDOM()')
-        .limit(limit);
-      if (exclude) { query.where(`published = true and post.id != ${exclude}`); }
-      return query.getMany().then(result => result as Post[]);
+        .getMany()
+        .then(result => result as Post[])
+        .then(async result => await Promise.all(result.map(async post => {
+          return PostComponent.find({ where: { post } }).then(components => {
+            return {
+              ...post,
+              components: components
+            }
+          });
+        })))
+        .then(result => result as Post[]);
     }
     const o: any = {};
     o[order] = direction;

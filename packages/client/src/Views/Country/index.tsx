@@ -1,26 +1,29 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-import { useGetCountryQuery } from '../../../Services/Post';
+import { useGetCountryQuery } from '../../Services/Post';
 
-import Header from '../../../Components/Header';
-import Container from '../../../Components/Container';
-import Footer from '../../../Components/Footer';
-import Loader from '../../../Components/Loader';
-import PostPreview from '../../../Components/PostPreview';
+import Container from '../../Components/Container';
+import Loader from '../../Components/Loader';
+import PostPreview from '../../Components/PostPreview';
+import Row from '../../Components/Row';
+import Column from '../../Components/Column';
 
 type CountryParams = {
   country: string;
 };
 
-const Country = () => {
+const Country: React.FC = () => {
   const { country } = useParams<CountryParams>();
   const { data, isLoading } = useGetCountryQuery(country);
 
   return (
     <>
+      <Helmet>
+        <title>Dave &amp; Suvi | {data?.name || 'Country'}</title>
+      </Helmet>
       <Loader show={isLoading} />
-      <Header />
 
       <Container>
         <h1 className="title mb-4">{data?.name || ''}</h1>
@@ -30,12 +33,10 @@ const Country = () => {
             <p className="text-center mb-5">It seems there's no posts here, check back soon!</p>
           </>
         )}
-        <div className="row">
-          {(data?.posts || []).map((post) => <div className="col col-md-4"><PostPreview {...post} /></div>)}
-        </div>
+        <Row>
+          {(data?.posts || []).map((post) => <Column key={post.id} md={4}><PostPreview {...post} /></Column>)}
+        </Row>
       </Container>
-
-      <Footer />
     </>
   );
 };

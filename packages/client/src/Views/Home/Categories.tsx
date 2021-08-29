@@ -1,8 +1,8 @@
 import React from 'react';
-import { useGetCategoriesQuery } from '../../../Services/Post';
-import Category from '../../../Components/Category';
+import { useGetCategoriesQuery } from '../../Services/Post';
+import Category from '../../Components/Category';
 
-const Categories = () => {
+const Categories: React.FC = () => {
   const { data } = useGetCategoriesQuery(undefined);
 
   return (

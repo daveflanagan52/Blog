@@ -9,9 +9,9 @@ function shorten(text: string, max: number) {
   return `${trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))}...`;
 }
 
-const PostPreview = ({
+const PostPreview: React.FC<PostType> = ({
   name, slug, thumbnail, components, createdAt,
-}: PostType) => (
+}) => (
   <div className="card card-post mb-4">
     <img alt={name} src={thumbnail} className="card-img-top" />
     <div className="card-meta">

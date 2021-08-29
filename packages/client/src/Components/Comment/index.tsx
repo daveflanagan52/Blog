@@ -3,9 +3,9 @@ import Moment from 'react-moment';
 
 import { Comment as CommentType } from '../../Types';
 
-const Comment = ({
+const Comment: React.FC<CommentType> = ({
   name, content, avatar, createdAt,
-}: CommentType) => (
+}) => (
   <article className="comment mb-4">
     <div className="avatar">
       <img src={avatar} width="56" height="56" alt={name} />

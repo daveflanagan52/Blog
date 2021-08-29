@@ -2,9 +2,9 @@ import React from 'react';
 import Button, { ButtonType } from '../Button';
 import { Category as CategoryType } from '../../Types';
 
-const Category = ({
+const Category: React.FC<CategoryType> = ({
   name, slug, description, thumbnail,
-}: CategoryType) => (
+}) => (
   <div className="tag">
     <div className="content">
       <div className="title h3">{name}</div>
