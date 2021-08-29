@@ -56,5 +56,5 @@ type Author = {
 };
 
 export type {
-  Post, Comment, Category, Country, Location, Author, PostCompoment
+  Post, Comment, Category, Country, Location, Author, PostCompoment,
 };

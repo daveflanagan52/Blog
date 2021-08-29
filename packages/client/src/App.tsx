@@ -1,7 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import CookieConsent from "react-cookie-consent";
+import {
+  BrowserRouter as Router, Switch, Route, Link,
+} from 'react-router-dom';
+import CookieConsent from 'react-cookie-consent';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 import store from './Store';
@@ -32,14 +34,17 @@ const App: React.FC = () => (
       <Provider store={store}>
         <Router>
           <CookieConsent
-            disableStyles={true}
+            disableStyles
             buttonClasses="ms-auto btn btn-primary"
             containerClasses="cookie d-flex align-items-center p-2 bg-dark text-light"
             contentClasses=""
             buttonText="OK"
             buttonWrapperClasses="ms-auto"
           >
-            Cookies are used to improve your expierience on this site. To find out more, read the <Link to='/privacy'>Privacy Policy</Link>.
+            Cookies are used to improve your expierience on this site. To find out more, read the
+            {' '}
+            <Link to="/privacy">Privacy Policy</Link>
+            .
           </CookieConsent>
           <ScrollToTop />
           <Header />

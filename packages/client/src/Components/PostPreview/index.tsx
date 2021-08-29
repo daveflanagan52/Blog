@@ -19,7 +19,7 @@ const PostPreview: React.FC<PostType> = ({
     </div>
     <div className="card-body">
       <h3 className="title">{name}</h3>
-      <div className="excerpt">{shorten((components || []).slice().sort((a, b) => a.order - b.order).find(comp => comp.type === 'text')?.content || '', 150)}</div>
+      <div className="excerpt">{shorten((components || []).slice().sort((a, b) => a.order - b.order).find((comp) => comp.type === 'text')?.content || '', 150)}</div>
       <Button link={`/post/${slug}`} type={ButtonType.Primary} text="Read More" />
     </div>
     <Button link={`/post/${slug}`} type={ButtonType.Link} text="" />

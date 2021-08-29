@@ -22,16 +22,12 @@ export class PostController extends BaseController {
         .where(`p.published = true and p.id != ${exclude || -1}`)
         .orderBy('RANDOM()')
         .getMany()
-        .then(result => result as Post[])
-        .then(async result => await Promise.all(result.map(async post => {
-          return PostComponent.find({ where: { post } }).then(components => {
-            return {
-              ...post,
-              components: components
-            }
-          });
-        })))
-        .then(result => result as Post[]);
+        .then((result) => result as Post[])
+        .then(async (result) => await Promise.all(result.map(async (post) => PostComponent.find({ where: { post } }).then((components) => ({
+          ...post,
+          components,
+        })))))
+        .then((result) => result as Post[]);
     }
     const o: any = {};
     o[order] = direction;
@@ -41,7 +37,7 @@ export class PostController extends BaseController {
       },
       order: o,
       take: limit,
-      relations: ['components']
+      relations: ['components'],
     });
   }
 

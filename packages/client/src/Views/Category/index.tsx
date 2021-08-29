@@ -21,7 +21,10 @@ const Category: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Dave &amp; Suvi | {data?.name || 'Category'}</title>
+        <title>
+          Dave &amp; Suvi |
+          {data?.name || 'Category'}
+        </title>
       </Helmet>
       <Loader show={isLoading} />
 

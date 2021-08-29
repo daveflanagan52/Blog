@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import ReactGA, { FieldsObject } from "react-ga";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useEffect } from 'react';
+import ReactGA, { FieldsObject } from 'react-ga';
+import { RouteComponentProps } from 'react-router-dom';
 
 ReactGA.initialize('UA-117372616-3');
 
@@ -20,4 +20,4 @@ export default <P extends RouteComponentProps>(
 
     return <WrappedComponent {...props} />;
   };
-}
+};

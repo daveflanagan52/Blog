@@ -21,7 +21,10 @@ const Country: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Dave &amp; Suvi | {data?.name || 'Country'}</title>
+        <title>
+          Dave &amp; Suvi |
+          {data?.name || 'Country'}
+        </title>
       </Helmet>
       <Loader show={isLoading} />
 

@@ -22,18 +22,14 @@ const About: React.FC = () => (
           <Column md={3}>
             <img src={dave} className="img-fluid" />
           </Column>
-          <Column md={9}>
-            
-          </Column>
+          <Column md={9} />
         </Row>
       </section>
 
       <section className="about">
         <h1 className="title">Suvi</h1>
         <Row>
-          <Column md={9}>
-
-          </Column>
+          <Column md={9} />
           <Column md={3}>
             <img src={suvi} className="img-fluid" />
           </Column>

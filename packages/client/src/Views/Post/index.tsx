@@ -26,7 +26,10 @@ const Post: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Dave &amp; Suvi | {data?.name || 'Post'}</title>
+        <title>
+          Dave &amp; Suvi |
+          {data?.name || 'Post'}
+        </title>
       </Helmet>
       <Loader show={isLoading} />
 
@@ -59,7 +62,7 @@ const Post: React.FC = () => {
                   case 'text':
                     return (<p>{component.content}</p>);
                   case 'image':
-                    return (<img src={component.content} width={component?.width || 'auto'} className={'img-fluid float-md-' + (component.align || 'none')} />);
+                    return (<img src={component.content} width={component?.width || 'auto'} className={`img-fluid float-md-${component.align || 'none'}`} />);
                   case 'video':
                     return (<div className="ratio ratio-16x9 mb-4"><iframe src={`https://www.youtube.com/embed/${component.content}?rel=0`} title="YouTube video" allowFullScreen /></div>);
                 }

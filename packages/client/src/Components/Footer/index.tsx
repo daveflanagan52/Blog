@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
-import Container from '../Container';
 import moment from 'moment';
+import Container from '../Container';
 
 const Footer: React.FC = () => (
   <footer>
@@ -35,7 +35,11 @@ const Footer: React.FC = () => (
           </li>
         </ul>
         <div className="copyright">
-          &copy; {moment().format('YYYY')} Dave &amp; Suvi
+          &copy;
+          {' '}
+          {moment().format('YYYY')}
+          {' '}
+          Dave &amp; Suvi
         </div>
       </div>
     </Container>
